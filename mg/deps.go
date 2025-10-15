@@ -7,6 +7,7 @@ import (
 	"os"
 	"reflect"
 	"runtime"
+	"runtime/debug"
 	"strings"
 	"sync"
 )
@@ -107,7 +108,7 @@ func runDeps(ctx context.Context, fns []Fn) {
 					} else {
 						exit = changeExit(exit, 1)
 					}
-					errs = append(errs, fmt.Sprint(v))
+					errs = append(errs, fmt.Sprint(v)+"\n"+string(debug.Stack()))
 					mu.Unlock()
 				}
 				wg.Done()
